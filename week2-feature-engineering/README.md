@@ -1,29 +1,57 @@
-# W2D4: Train/Test Split & Cross-Validation
+# Week 2 Project: End-to-End Preprocessing Pipeline
 
 ## Objective
 
-Implement train/test splitting and cross-validation using the approved AI/ML stack:
-NumPy, Pandas, and Scikit-Learn.
+Implement an end-to-end machine learning preprocessing and evaluation
+pipeline using the approved AI/ML stack:
 
-## Implementation
+- NumPy
+- Pandas
+- Scikit-Learn
 
-- Loaded the Iris dataset using Scikit-Learn.
-- Split the dataset into 80% training and 20% testing data.
-- Used StandardScaler through a Pipeline to prevent data leakage.
-- Applied 5-fold Stratified Cross-Validation.
-- Trained Logistic Regression on the complete training set.
-- Evaluated the final model on unseen test data.
+## Workflow
+
+1. Load the Iris dataset using Scikit-Learn.
+2. Store features and target using Pandas.
+3. Check dataset shape and missing values.
+4. Convert the data to NumPy arrays for Scikit-Learn processing.
+5. Split the data into 80% training and 20% testing sets.
+6. Standardize features using StandardScaler.
+7. Combine preprocessing and Logistic Regression using a Scikit-Learn Pipeline.
+8. Perform 5-fold Stratified Cross-Validation.
+9. Train the final pipeline using the complete training data.
+10. Evaluate the pipeline on the unseen test set.
+
+## Data Leakage Prevention
+
+StandardScaler is placed inside the Scikit-Learn Pipeline.
+
+This ensures that scaling parameters are learned only from the appropriate
+training data during cross-validation and final training. The test set
+remains completely unseen until final evaluation.
 
 ## Results
 
 - Total samples: 150
 - Training samples: 120
 - Testing samples: 30
+- Missing values: 0
 - Mean Cross-Validation Accuracy: 0.9583
-- Test Accuracy: 0.9333
+- CV Accuracy Standard Deviation: 0.0264
+- Final Test Accuracy: 0.9333
 
-## Key Learning
+## Output Evidence
 
-The test set is kept completely separate until final evaluation.
-Using a Pipeline ensures that scaling is fitted only on the appropriate
-training portion during cross-validation, preventing data leakage.
+```text
+Dataset shape: (150, 4)
+Missing values: 0
+
+Total samples: 150
+Training samples: 120
+Testing samples: 30
+Mean CV accuracy: 0.9583
+CV accuracy standard deviation: 0.0264
+Test accuracy: 0.9333
+
+Pipeline completed successfully.
+Preprocessing was performed without data leakage.
