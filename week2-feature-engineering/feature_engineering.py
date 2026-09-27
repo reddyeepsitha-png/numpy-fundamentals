@@ -1,14 +1,22 @@
 """
-W2D4: Train/Test Split & Cross-Validation
+Week 2 Project: End-to-End Preprocessing Pipeline
 
 Demonstrates:
+- Loading data with Pandas
+- Separating features and target
 - Train/test split
-- Feature scaling without data leakage
-- 5-fold cross-validation
-- Final test-set evaluation
+- Standardization without data leakage
+- Stratified 5-fold cross-validation
+- Logistic Regression classification
+- Final evaluation on unseen test data
+
+Approved AI/ML stack:
+NumPy, Pandas, Scikit-Learn
 """
 
 import numpy as np
+import pandas as pd
+
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
 from sklearn.pipeline import Pipeline
@@ -17,14 +25,30 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 
-# Load the Iris dataset
+# 1. Load the Iris dataset
 iris = load_iris()
-X = iris.data
-y = iris.target
+
+X = pd.DataFrame(
+    iris.data,
+    columns=iris.feature_names
+)
+
+y = pd.Series(
+    iris.target,
+    name="target"
+)
 
 
-# Split the dataset into training and testing sets
-# 80% training data and 20% testing data
+# 2. Basic data validation
+print("Dataset shape:", X.shape)
+print("Missing values:", X.isnull().sum().sum())
+
+# Convert Pandas objects to NumPy arrays for Scikit-Learn
+X = X.to_numpy()
+y = y.to_numpy()
+
+
+# 3. Train/test split
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -34,16 +58,21 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 
-# Create a pipeline to prevent data leakage.
-# StandardScaler is fitted separately inside each CV training fold.
+# 4. Build preprocessing + model pipeline
+# The scaler is fitted only on training data,
+# preventing data leakage.
 pipeline = Pipeline([
     ("scaler", StandardScaler()),
     ("model", LogisticRegression(max_iter=1000))
 ])
 
 
-# Perform 5-fold stratified cross-validation on training data
-cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+# 5. Five-fold stratified cross-validation
+cv = StratifiedKFold(
+    n_splits=5,
+    shuffle=True,
+    random_state=42
+)
 
 cv_scores = cross_val_score(
     pipeline,
@@ -54,21 +83,31 @@ cv_scores = cross_val_score(
 )
 
 
-# Train the final pipeline on the complete training data
+# 6. Train final pipeline
 pipeline.fit(X_train, y_train)
 
 
-# Evaluate the final model on unseen test data
+# 7. Evaluate on unseen test data
 y_pred = pipeline.predict(X_test)
-test_accuracy = accuracy_score(y_test, y_pred)
+
+test_accuracy = accuracy_score(
+    y_test,
+    y_pred
+)
 
 
-# Display results
-print("W2D4: Train/Test Split & Cross-Validation")
-print("-" * 50)
+# 8. Display results
+print("\nWeek 2 Project: End-to-End Preprocessing Pipeline")
+print("-" * 55)
+
 print(f"Total samples: {len(X)}")
 print(f"Training samples: {len(X_train)}")
 print(f"Testing samples: {len(X_test)}")
+
 print(f"Cross-validation scores: {cv_scores}")
-print(f"Mean CV accuracy: {cv_scores.mean():.4f}")
+print(f"Mean CV accuracy: {np.mean(cv_scores):.4f}")
+print(f"CV accuracy standard deviation: {np.std(cv_scores):.4f}")
 print(f"Test accuracy: {test_accuracy:.4f}")
+
+print("\nPipeline completed successfully.")
+print("Preprocessing was performed without data leakage.")
