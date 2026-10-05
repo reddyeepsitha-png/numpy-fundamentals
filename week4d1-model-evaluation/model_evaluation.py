@@ -64,7 +64,11 @@ def load_data() -> Tuple[pd.DataFrame, pd.Series]:
     return features, target
 
 
-def create_model() -> RandomForestClassifier:
+def create_model():
+    return RandomForestClassifier(
+        n_estimators=200,
+        random_state=RANDOM_STATE
+    )
     """Create a reproducible Random Forest classifier."""
 
     return RandomForestClassifier(
