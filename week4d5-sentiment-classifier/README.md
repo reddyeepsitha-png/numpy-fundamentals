@@ -47,3 +47,6 @@ Activate the project's Python virtual environment, install the required
 dependencies, and run:
 
 python sentiment_classifier.py
+
+## Reproducibility
+The experiment uses a fixed random seed for the train/test split.
