@@ -1,1 +1,13 @@
 .venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# W4D6 Jupyter checkpoints
+week4d6-responsible-ai/.ipynb_checkpoints/
+
+# W4D6 isolated environment and downloaded dataset
+week4d6-responsible-ai/.venv/
+week4d6-responsible-ai/data/
+

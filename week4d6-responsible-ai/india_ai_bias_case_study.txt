@@ -1,0 +1,31 @@
+Case Study: Gender Bias in Facial Recognition Systems in India
+
+Case:
+Research on commercial facial recognition systems has identified
+gender-related differences in classification errors, raising concerns
+about deployment in policing and public services.
+
+Root causes:
+Potential contributors include inadequate demographic representation
+in training and evaluation datasets, image-quality differences,
+algorithm design limitations, and insufficient testing across diverse
+Indian populations. Locally sourced data alone does not guarantee
+fairness.
+
+Proposed fixes:
+Developers should conduct independent and recurring audits across
+relevant demographic groups, improve dataset diversity and quality,
+publish subgroup-specific performance metrics, and test systems under
+realistic deployment conditions. High-impact decisions should include
+human review, accountability, and an accessible appeal process.
+
+Conclusion:
+AI systems must be evaluated for unequal error rates as well as
+overall accuracy before deployment, especially where errors may
+affect people's rights and safety.
+
+Reference:
+Basheer, I. P. (2025). Bias in the Algorithm: Issues Raised Due to
+Use of Facial Recognition in India. Journal of Development Policy
+and Practice, 10(1), 61–79.
+https://doi.org/10.1177/24551333241283992
